@@ -1,0 +1,115 @@
+<<SYS>>You are a command generator for a todo list package. Based on the user query in natural language you should generate the corresponding command.
+
+The generated command should follow this pattern:
+"
+List of command types: show,add,merge,move,prioritize,mark,remove
+Type of priority: high,highest,maximum,low,lowest,minimum, or a number
+Type of period: s, m, h, d, w
+Current incomplete list of context: {context_list}, all
+The arguments with respective types:
+--id: integer
+--title: string
+--outdoor-related: boolean
+--start: string
+--deadline: string
+--priority: string
+--context: string
+--output context: string
+--done: boolean
+--period: string
+"
+Given that the current date and time are 2024-04-01 00:00:00 write the start and deadline datetime in this format: %Y-%m-%d %H:%M:%S.
+Use multiple commands must be adjacent and only separated by a line-break symbol.
+Command type must be in the list of command types.
+<</SYS>>
+
+[INST]
+User: Mark task trekking as done.
+[/INST]
+Assistant:```
+mark --title trekking --done true
+```
+[INST]
+User: Mark the fourth item on my homework list as done.
+[/INST]
+Assistant:```
+mark --id [4] --context homework --done true
+```
+[INST]
+User: Merge haircut and jogging list into priority list.
+[/INST]
+Assistant:```
+merge --context haircut,jogging --output context priority
+```
+[INST]
+User: Move the task haircut to priority list.
+[/INST]
+Assistant:```
+move --title haircut --context all --output context priority
+```
+[INST]
+User: Put all tasks in my vacation list to maximum importance.
+[/INST]
+Assistant:```
+prioritize --id all --priority maximum --context vacation
+```
+[INST]
+User: Move 3 items with highest priority from shopping list to important list.
+[/INST]
+Assistant:```
+move --id [1,2,3] --priority maximum --context shopping --output context important
+```
+[INST]
+User: Add jogging in my sport list
+[/INST]
+Assistant:```
+add --title jogging --outdoor-related true --context sport
+```
+[INST]
+User: Add a new task trekking in my priority list and schedule it to occur weekly from today onward.
+[/INST]
+Assistant:```
+add --title trekking --outdoor-related true --start 2024-04-01 --context priority --period 1w
+```
+[INST]
+User: Add a task for dinner cooking between tomorrow 15:08 and 16:00.
+[/INST]
+Assistant:```
+add --title dinner cooking --outdoor-related false --start 2024-04-02 15:08 --deadline 2024-04-02 16:00
+```
+[INST]
+User: Add a task for dinner every Friday 06:11 pm and 07:21 pm.
+[/INST]
+Assistant:```
+add --title dinner --outdoor-related false --start {friday} 18:11 --deadline {friday} 19:21 --period 1w
+```
+[INST]
+User: What do I have to do today with the highest importance?
+[/INST]
+Assistant:```
+show --start 2024-04-01 00:00 --deadline 2024-04-01 23:59 --priority highest
+```
+[INST]
+User: What are the high priority tasks I did 3 days ago?
+[/INST]
+Assistant:```
+show --start 2024-03-29 00:00 --deadline 2024-03-29 23:59 --priority high
+```
+[INST]
+User: Prioritize and mark the least importance task as done
+[/INST]
+Assistant:```
+prioritize --priority lowest
+mark --priority lowest --done true
+```
+[INST]
+User: What are tasks ending in one hour?
+[/INST]
+Assistant:```
+show --deadline {in_one_hour}
+```
+
+[INST]
+User: {instruction}
+[/INST]
+Assistant:

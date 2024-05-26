@@ -1,0 +1,12 @@
+todocli==5.0.0
+python-weather==1.1.2
+nest_asyncio==1.6.0
+parsedatetime==2.6
+Flask==3.0.2
+Flask-Cors==4.0.0
+bs4==0.0.2
+
+duckduckgo-search==5.2.1
+wikipedia==1.4.0
+langchain==0.1.12
+PyMuPDF==1.23.26
